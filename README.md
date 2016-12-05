@@ -27,7 +27,7 @@ Step 2. Add the dependency
   使用方法：
   1. 在Activity 里@Override onRequestPermissionsResult ，然后调用PermissionsHepler.getInstance(this).onRequestPermissionsResult(requestCode, permissions, grantResults)<br>
   
-  2. 在需要询问权限的方法前调用PermissionsHepler.getInstance(this).performCodeWithPermission()， 就会弹出询问打开权限的对话框。
+  2. 在需要询问权限的方法前调用`PermissionsHepler.getInstance(this).performCodeWithPermission()`， 就会弹出询问打开权限的对话框。
   performCodeWithPermission方法的第一个参数是权限的名字，用来显示的。第二个参数是PermissionCallback， 用来回调权限是否打开。第三个参数是权限，从Manifest.permission里面获取。<br>
   
   例如：
