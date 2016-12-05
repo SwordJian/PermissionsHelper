@@ -31,6 +31,7 @@ Step 2. Add the dependency
   performCodeWithPermission方法的第一个参数是权限的名字，用来显示的。第二个参数是PermissionCallback， 用来回调权限是否打开。第三个参数是权限，从Manifest.permission里面获取。
   
   例如：
+  
   PermissionsHepler.getInstance(this).performCodeWithPermission("相机", new PermissionsHepler.PermissionCallback() {
                 @Override
                 public void hasPermission() {
