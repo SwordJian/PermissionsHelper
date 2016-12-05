@@ -31,16 +31,17 @@ Step 2. Add the dependency
   `performCodeWithPermission` 方法的第一个参数是权限的名字，用来显示的。第二个参数是`PermissionCallback`， 用来回调权限是否打开。第三个参数是权限，从`Manifest.permission`里面获取。<br>
   
   例如：
-  
-  `PermissionsHepler.getInstance(this).performCodeWithPermission("相机", new PermissionsHepler.PermissionCallback()` {<br>
-    `@Override`<br>
-    `public void hasPermission()` {<br>
-        `Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);`<br>
-        `startActivityForResult(intent, 1);`<br>
-    `}`<br>
-<br>
-    	`@Override` <br>
-    	`public void noPermission(String code) {`<br>
-<br>
-    `}`<br>
-    `}, Manifest.permission.CAMERA);`<br>
+  ```
+   PermissionsHepler.getInstance(this).performCodeWithPermission("相机", new PermissionsHepler.PermissionCallback() {
+                @Override
+                public void hasPermission() {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                }
+
+                @Override
+                public void noPermission(String code) {
+
+                }
+            }, Manifest.permission.CAMERA);
+```
