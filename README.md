@@ -39,7 +39,7 @@ Step 2. Add the dependency
         startActivityForResult(intent, 1);<br>
     }<br>
 <br>
-    @Override
+    @Override <br>
     public void noPermission(String code) {<br>
 <br>
     }<br>
