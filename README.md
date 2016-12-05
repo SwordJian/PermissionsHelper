@@ -32,15 +32,15 @@ Step 2. Add the dependency
   
   例如：
   
-  `PermissionsHepler.getInstance(this).performCodeWithPermission("相机", new PermissionsHepler.PermissionCallback() {<br>
-    @Override<br>
-    public void hasPermission() {<br>
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);<br>
-        startActivityForResult(intent, 1);<br>
-    }<br>
+  `PermissionsHepler.getInstance(this).performCodeWithPermission("相机", new PermissionsHepler.PermissionCallback()` {<br>
+    `@Override`<br>
+    `public void hasPermission()` {<br>
+        `Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);`<br>
+        `startActivityForResult(intent, 1);`<br>
+    `}`<br>
 <br>
-    	@Override <br>
-    	public void noPermission(String code) {<br>
+    	`@Override` <br>
+    	`public void noPermission(String code) {`<br>
 <br>
-    }<br>
-    }, Manifest.permission.CAMERA);`<br>
+    `}`<br>
+    `}, Manifest.permission.CAMERA);`<br>
