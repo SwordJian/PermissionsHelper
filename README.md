@@ -25,14 +25,14 @@ Step 2. Add the dependency
   其他导入请参考https://jitpack.io
   
   使用方法：
-  1. 在Activity 里@Override onRequestPermissionsResult ，然后调用PermissionsHepler.getInstance(this).onRequestPermissionsResult(requestCode, permissions, grantResults)<br>
+  1. 在Activity 里@Override onRequestPermissionsResult ，然后调用`PermissionsHepler.getInstance(this).onRequestPermissionsResult(requestCode, permissions, grantResults)`<br>
   
   2. 在需要询问权限的方法前调用`PermissionsHepler.getInstance(this).performCodeWithPermission()`， 就会弹出询问打开权限的对话框。
-  performCodeWithPermission方法的第一个参数是权限的名字，用来显示的。第二个参数是PermissionCallback， 用来回调权限是否打开。第三个参数是权限，从Manifest.permission里面获取。<br>
+  `performCodeWithPermission` 方法的第一个参数是权限的名字，用来显示的。第二个参数是`PermissionCallback`， 用来回调权限是否打开。第三个参数是权限，从`Manifest.permission`里面获取。<br>
   
   例如：
   
-  PermissionsHepler.getInstance(this).performCodeWithPermission("相机", new PermissionsHepler.PermissionCallback() {<br>
+  `PermissionsHepler.getInstance(this).performCodeWithPermission("相机", new PermissionsHepler.PermissionCallback() {<br>
     @Override<br>
     public void hasPermission() {<br>
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);<br>
@@ -43,4 +43,4 @@ Step 2. Add the dependency
     	public void noPermission(String code) {<br>
 <br>
     }<br>
-    }, Manifest.permission.CAMERA);<br>
+    }, Manifest.permission.CAMERA);`<br>
