@@ -39,8 +39,8 @@ Step 2. Add the dependency
         startActivityForResult(intent, 1);<br>
     }<br>
 <br>
-    @Override <br>
-    public void noPermission(String code) {<br>
+    	@Override <br>
+    	public void noPermission(String code) {<br>
 <br>
     }<br>
     }, Manifest.permission.CAMERA);<br>
