@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.sword.permissionshelper.library.PermissionsHepler;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -118,7 +120,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (PermissionsHepler.getInstance(this).onRequestPermissionsResult(requestCode, permissions, grantResults)) {
+        if (PermissionsHepler.getInstance(this).onRequestPermissionsResult(requestCode,permissions,grantResults))
+        {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
