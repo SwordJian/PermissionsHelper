@@ -19,7 +19,7 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	        compile 'com.github.SwordJian:PermissionsHelper:1.0.1'
+	        compile 'com.github.SwordJian:PermissionsHelper:1.0.2'
 	}
   
   其他导入请参考https://jitpack.io
