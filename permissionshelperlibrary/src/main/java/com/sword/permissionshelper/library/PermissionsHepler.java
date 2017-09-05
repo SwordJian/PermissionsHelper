@@ -44,12 +44,8 @@ public class PermissionsHepler {
         if (sHepler == null) {
             sHepler = new PermissionsHepler();
         }
-        if (sHepler.mActivity == null) {
-            sHepler.mActivity = pAct;
-        }
-        if (sHepler.permissionMap == null) {
-            sHepler.permissionMap = new HashMap<>();
-        }
+        sHepler.mActivity = pAct;
+        sHepler.permissionMap = new HashMap<>();
         return sHepler;
     }
 
@@ -177,7 +173,7 @@ public class PermissionsHepler {
                     permissionCallback.noPermission("");
 //                    permissionCallback = null;
                 }
-                for (String p : permissions){
+                for (String p : permissions) {
                     permissionMap.put(p, 1);
                 }
             }
