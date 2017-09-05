@@ -45,7 +45,7 @@ public class PermissionsHepler {
         mActivity = pAct;
     }
 
-    private Activity getActivity(){
+    private Activity getActivity() {
         return mActivity;
     }
 
@@ -60,9 +60,10 @@ public class PermissionsHepler {
         isShowPermission = true;
         this.permissionDes = getActivity().getResources().getString(R.string.permission_tips);
         this.permissionDes = String.format(this.permissionDes, permissionDes);
-        if (permissions == null || permissions.length == 0) return;
+        if (permissions.length == 0) return;
 //        this.permissionrequestCode = requestCode;
         this.permissionCallback = callback;
+
         if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.M) || checkPermissionGranted(permissions)) {
             if (permissionCallback != null) {
                 permissionCallback.hasPermission();
@@ -75,7 +76,7 @@ public class PermissionsHepler {
 
     }
 
-    private boolean checkPermissionGranted(String[] permissions) {
+    public boolean checkPermissionGranted(@NonNull String... permissions) {
         boolean flag = true;
         for (String p : permissions) {
             if (ActivityCompat.checkSelfPermission(getActivity(), p) != PackageManager.PERMISSION_GRANTED) {
@@ -109,7 +110,7 @@ public class PermissionsHepler {
      * Callback received when a permissions request has been completed.
      */
     public boolean onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+                                              @NonNull int[] grantResults) {
         if (requestCode == permissionRequestCode) {
             if (verifyPermissions(grantResults)) {
                 if (permissionCallback != null) {
