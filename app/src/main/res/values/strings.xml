@@ -4,8 +4,4 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings" translatable="false">设置</string>
-    <string name="action_cancel" translatable="false">取消</string>
-    <string name="action_exit">exit</string>
-    <string name="permission_tips">当前应用缺少%1$s权限，请点击\"设置\"-\"权限\"-打开%1$s权限。</string>
 </resources>
