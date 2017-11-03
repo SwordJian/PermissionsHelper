@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">PermissionsHelperLibrary</string>
 
-    <string name="action_settings" translatable="false">设置</string>
+    <string name="action_settings" translatable="false">去设置</string>
     <string name="action_keepon" translatable="false">继续</string>
     <string name="action_cancel" translatable="false">取消</string>
+    <string name="permission_title">权限申请</string>
     <string name="permission_tips">当前应用需要具备%1$s权限，请点击\"继续\"获取%1$s权限。</string>
-    <string name="miss_permission_tips">当前应用需要具%1$s权限，请点击\"设置\"-\"权限\"-打开%1$s权限。</string>
+    <!--<string name="miss_permission_tips">当前应用需要具%1$s权限，请点击\"设置\"-\"权限\"-打开%1$s权限。</string>-->
+    <string name="miss_permission_tips">在设置-应用-%1$s-权限中开启%2$s权限，以正常使用%1$s功能</string>
 </resources>

@@ -10,7 +10,6 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,7 +97,7 @@ public class PermissionsHepler {
         this.permissionDes = getActivity().getResources().getString(R.string.permission_tips);
         this.permissionDes = String.format(this.permissionDes, permissionDes);
         this.missPermissionDes = getActivity().getResources().getString(R.string.miss_permission_tips);
-        this.missPermissionDes = String.format(this.missPermissionDes, permissionDes);
+        this.missPermissionDes = String.format(this.missPermissionDes, mActivity.getResources().getString(R.string.app_name), permissionDes);
         if (permissions.length == 0) return;
 //        this.permissionrequestCode = requestCode;
         this.permissionCallback = callback;
@@ -137,14 +136,10 @@ public class PermissionsHepler {
     public boolean shouldShowRequestPermissionRationale(String... permissions) {
         boolean flag = false;
         for (String p : permissions) {
-            Log.d("Sword", p + " : " + ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), p));
-            Log.d("Sword", "---------------------------------");
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), p)) {
                 flag = true;
                 break;
             } else {
-                Log.d("Sword", p + " map : " + permissionMap.get(p));
-                Log.d("Sword", "---------------------------------");
                 if (permissionMap.get(p) == null || permissionMap.get(p) == 0) {
                     flag = true;
                     break;
@@ -157,7 +152,7 @@ public class PermissionsHepler {
     private void requestPermission(boolean isShowDialog, final int requestCode, final String[] permissions) {
         if (shouldShowRequestPermissionRationale(permissions)) {
             if (isShowDialog) {
-                new AlertDialog.Builder(getActivity()).setMessage(permissionDes)
+                new AlertDialog.Builder(getActivity()).setTitle(R.string.permission_title).setMessage(permissionDes)
                         .setPositiveButton(R.string.action_keepon, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -178,7 +173,7 @@ public class PermissionsHepler {
             }
 
         } else {
-            new AlertDialog.Builder(getActivity()).setTitle(android.R.string.dialog_alert_title).setMessage(missPermissionDes)
+            new AlertDialog.Builder(getActivity()).setTitle(R.string.permission_title).setMessage(missPermissionDes)
                     .setPositiveButton(R.string.action_settings, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -225,8 +220,6 @@ public class PermissionsHepler {
                 }
                 for (String p : permissions) {
 
-                    Log.d("Sword", p + " refuse : " + permissionMap.get(p));
-                    Log.d("Sword", "---------------------------------");
                     permissionMap.put(p, 1);
                 }
             }
