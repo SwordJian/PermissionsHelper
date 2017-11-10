@@ -247,7 +247,7 @@ public class PermissionsHepler {
     }
 
     public static String getVersion() {
-        return "1.0.5";
+        return "1.1.0";
     }
 
     public static String getGitHubLink() {
