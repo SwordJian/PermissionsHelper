@@ -142,12 +142,11 @@ public class MainActivity extends AppCompatActivity
                     startActivityForResult(intent, 1);
                     Toast.makeText(getApplicationContext(), "获取权限成功", Toast.LENGTH_SHORT).show();
                 }
-
                 @Override
                 public void noPermission(String code) {
                     Toast.makeText(getApplicationContext(), "获取权限失败: " + code, Toast.LENGTH_SHORT).show();
                 }
-            }, true, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
+            }, true, true,  Manifest.permission.CAMERA);
 
         } else if (id == R.id.nav_gallery) {
 
