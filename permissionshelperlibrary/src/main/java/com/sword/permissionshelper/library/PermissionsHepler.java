@@ -11,9 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by SwordJian on 2016/12/2.
  *
@@ -46,10 +43,9 @@ public class PermissionsHepler {
     /**
      * 是否显示权限提示
      */
-    public boolean isShowPermission = false;
+    private boolean isShowPermission = false;
+    private boolean isShowPermissionSettingDialog = false;
     private PermissionCallback permissionCallback;
-
-    private Map<String, Integer> permissionMap;
 
     public interface PermissionCallback {
         void hasPermission();
@@ -60,7 +56,6 @@ public class PermissionsHepler {
     public static PermissionsHepler getInstance(Activity pAct) {
         if (sHepler == null) {
             sHepler = new PermissionsHepler();
-            sHepler.permissionMap = new HashMap<>();
         }
         sHepler.mActivity = pAct;
         return sHepler;
@@ -81,7 +76,7 @@ public class PermissionsHepler {
      * @param permissions   请求的权限（数组类型），直接从Manifest中读取相应的值，比如Manifest.permission.WRITE_CONTACTS
      */
     public void performCodeWithPermission(@NonNull String permissionDes, PermissionCallback callback, @NonNull String... permissions) {
-        performCodeWithPermission(permissionDes, callback, false, permissions);
+        performCodeWithPermission(permissionDes, callback, false, true, permissions);
     }
 
     /**
@@ -92,8 +87,9 @@ public class PermissionsHepler {
      * @param isShowDialog  是否显示对话框
      * @param permissions   请求的权限（数组类型），直接从Manifest中读取相应的值，比如Manifest.permission.WRITE_CONTACTS
      */
-    public void performCodeWithPermission(@NonNull String permissionDes, PermissionCallback callback, boolean isShowDialog, @NonNull String... permissions) {
+    public void performCodeWithPermission(@NonNull String permissionDes, PermissionCallback callback, boolean isShowDialog, boolean isShowPermissionSettingDialog, @NonNull String... permissions) {
         isShowPermission = true;
+        this.isShowPermissionSettingDialog = isShowPermissionSettingDialog;
         this.permissionDes = getActivity().getResources().getString(R.string.permission_tips);
         this.permissionDes = String.format(this.permissionDes, permissionDes);
         this.missPermissionDes = getActivity().getResources().getString(R.string.miss_permission_tips);
@@ -139,18 +135,18 @@ public class PermissionsHepler {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), p)) {
                 flag = true;
                 break;
-            } else {
-                if (permissionMap.get(p) == null || permissionMap.get(p) == 0) {
-                    flag = true;
-                    break;
-                }
             }
         }
         return flag;
     }
 
     private void requestPermission(boolean isShowDialog, final int requestCode, final String[] permissions) {
-        if (shouldShowRequestPermissionRationale(permissions)) {
+        if (checkPermissionGranted(permissions)) {
+            if (permissionCallback != null) {
+                permissionCallback.hasPermission();
+                permissionCallback = null;
+            }
+        } else {
             if (isShowDialog) {
                 new AlertDialog.Builder(getActivity()).setTitle(R.string.permission_title).setMessage(permissionDes)
                         .setPositiveButton(R.string.action_keepon, new DialogInterface.OnClickListener() {
@@ -171,33 +167,6 @@ public class PermissionsHepler {
             } else {
                 ActivityCompat.requestPermissions(getActivity(), permissions, requestCode);
             }
-
-        } else {
-            new AlertDialog.Builder(getActivity()).setTitle(R.string.permission_title).setMessage(missPermissionDes)
-                    .setPositiveButton(R.string.action_settings, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            Intent intent = new Intent();
-                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            intent.setData(Uri.fromParts("package", mActivity.getPackageName(), null));
-                            mActivity.startActivity(intent);
-                            if (permissionCallback != null) {
-                                permissionCallback.noPermission("setting");
-                            }
-                            isShowPermission = false;
-                            permissionCallback = null;
-                        }
-                    }).setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (permissionCallback != null) {
-                        permissionCallback.noPermission("cancel");
-                    }
-                    isShowPermission = false;
-                    permissionCallback = null;
-                }
-            }).show();
         }
     }
 
@@ -218,10 +187,34 @@ public class PermissionsHepler {
                     permissionCallback.noPermission("refuse");
 //                    permissionCallback = null;
                 }
-                for (String p : permissions) {
+                if (isShowPermissionSettingDialog) {
+                    new AlertDialog.Builder(getActivity()).setTitle(R.string.permission_title).setMessage(missPermissionDes)
+                            .setPositiveButton(R.string.action_settings, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                    permissionMap.put(p, 1);
+                                    Intent intent = new Intent();
+                                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.setData(Uri.fromParts("package", mActivity.getPackageName(), null));
+                                    mActivity.startActivity(intent);
+                                    if (permissionCallback != null) {
+                                        permissionCallback.noPermission("setting");
+                                    }
+                                    isShowPermission = false;
+                                    permissionCallback = null;
+                                }
+                            }).setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (permissionCallback != null) {
+                                permissionCallback.noPermission("cancel");
+                            }
+                            isShowPermission = false;
+                            permissionCallback = null;
+                        }
+                    }).show();
                 }
+
             }
             return true;
         } else {
@@ -247,7 +240,7 @@ public class PermissionsHepler {
     }
 
     public static String getVersion() {
-        return "1.1.0";
+        return "1.1.1";
     }
 
     public static String getGitHubLink() {
